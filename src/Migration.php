@@ -101,7 +101,9 @@ abstract class Migration extends IlluminateMigration
 			$this->handleException($exception);
 		}
 
-		$this->connection->commit();
+		if ($this->connection->getPdo()->inTransaction()) {
+			$this->connection->commit();
+		}
 	}
 
 	/**
